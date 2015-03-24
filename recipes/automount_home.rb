@@ -7,8 +7,13 @@
 # All rights reserved - Do Not Redistribute
 #
 
-# TODO: Region detection for region NAS mounts.
+map_entry 'homes' do
+  location "#{node['autofs-nativex']['nas_name']}:/mnt/ebs"
+  fstype 'nfs4'
+  options 'rw'
+  map '/etc/auto.TEAMFREEZE'
+end
 
-automaster_entry '/home', '/etc/lwi_automount/auto.TEAMFREEZE' do
-  options '--timeout 600'
+automaster_entry '/home', '/etc/auto.TEAMFREEZE' do
+  options '--timeout 300'
 end
