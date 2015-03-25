@@ -18,9 +18,8 @@ ruby_block "determine_ec2_region_and_set_nas" do
         node.default['autofs-nativex']['nas_name'] = "PAW1AL-NAS-01-prv.nativexintern.com"
       when 'us-west-2'
         node.default['autofs-nativex']['nas_name'] = "PAW2AL-NAS-02-prv.nativexintern.com"
-    end
-    else
-      Chef::Log.warn("Undefined AWS region! Cannot automatically set the proper NAS.")
+     else
+      Chef::Log.warn("Undefined AWS region! Cannot automatically set the proper OU.")
     end
   end
   action :run
