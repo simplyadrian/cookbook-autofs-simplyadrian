@@ -1,6 +1,6 @@
 autofs-nativex Cookbook
 =======================
-This cookbook provides a library to modify the autofs mappings as well as two recipes that setup the current autofs usage at NativeX.
+This cookbook provides the ability install and configure the autofs service and ayutomount mappings. As well as two recipes that setup the current autofs usage at NativeX for AWS and CDC.
 
 Attributes
 ----------
