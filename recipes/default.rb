@@ -7,6 +7,9 @@
 # All rights reserved - Do Not Redistribute
 #
 
+# If we're in EC2, then need to dynamically determine the NAS based on region
+include_recipe 'autofs-nativex::dynamic_nas' if node['cloud']['provider'] == 'ec2'
+
 # Install autofs for mounting home directories.
 case node[:platform]
 when 'debian','ubuntu'
