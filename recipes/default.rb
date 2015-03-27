@@ -18,7 +18,7 @@ end
 
 # Reload autofs service
 service "autofs" do
-  supports :status => true, :start => true, :stop => true, :restart => true
+  supports [ :status => true, :start => true, :stop => true, :restart => true, :reload => true ]
   action [:enable, :start, :reload]
 end
 
@@ -30,13 +30,12 @@ template "/etc/auto.master" do
   notifies :reload, resources(:service => "autofs"), :immediately
 end
 
-node[:autofs][:maps].each do |map, args|
-  template args[:source].gsub(/file:/, '') do
+node[:autofs][:maps].each do |map|
+  template map[:source] do
     owner "root"
     group "root"
     mode 0644
     source "auto.map.erb"
-    variables(:keys => args[:keys])
     notifies :reload, resources(:service => "autofs"), :immediately
   end
 end
