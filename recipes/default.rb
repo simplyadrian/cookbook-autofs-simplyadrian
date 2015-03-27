@@ -22,33 +22,21 @@ service "autofs" do
   action [:enable, :start, :reload]
 end
 
-file '/etc/auto.direct' do
-  owner 'root'
-  group 'root'
-  mode 0640
-
-  action :create_if_missing
-  notifies :restart, 'service[autofs]'
+template "/etc/auto.master" do
+  source "auto.master.erb"
+  owner "root"
+  group "root"
+  mode "0644"
+  notifies :reload, resources(:service => "autofs"), :immediately
 end
 
-file '/etc/auto.master' do
-  owner 'root'
-  group 'root'
-  mode 0644
-
-  action :create_if_missing
-  notifies :restart, 'service[autofs]'
-end
-
-# Ensure the following line exists in auto.master
-# /- /etc/auto.direct --timeout=3600
-
-ruby_block 'autofs.direct' do
-  block do
-    rc = Chef::Util::FileEdit.new('/etc/auto.master')
-    rc.insert_line_if_no_match(/^\/\-/, "/- /etc/auto.direct --timeout=#{node['automount']['timeout']}")
-    rc.search_file_replace_line(/^\/\-/, "/- /etc/auto.direct --timeout=#{node['automount']['timeout']}")
-    rc.write_file
+node[:autofs][:maps].each do |map, args|
+  template args[:source].gsub(/file:/, '') do
+    owner "root"
+    group "root"
+    mode 0644
+    source "auto.map.erb"
+    variables(:keys => args[:keys])
+    notifies :reload, resources(:service => "autofs"), :immediately
   end
-  notifies :restart, 'service[autofs]'
 end
