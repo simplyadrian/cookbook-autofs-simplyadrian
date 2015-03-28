@@ -22,6 +22,6 @@
 #
 # +auto.master
 
-<% @node[:autofs][:maps].each do |map| %>
+<% @node['autofs-nativex']['maps'].each do |map| %>
 <%= map[:mount_dir] %> <%= map[:source] %>
 <% end %>
