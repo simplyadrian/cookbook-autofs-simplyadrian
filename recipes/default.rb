@@ -33,7 +33,7 @@ template "/etc/auto.master" do
   notifies :reload, resources(:service => "autofs"), :immediately
 end
 
-node[:autofs][:maps].each do |map|
+node['autofs']['maps'].each do |map|
   template map[:source] do
     owner "root"
     group "root"
