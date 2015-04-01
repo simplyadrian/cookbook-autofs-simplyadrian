@@ -13,11 +13,11 @@ ruby_block "determine_ec2_region_and_set_nas" do
   block do
     case node['aws']['region']
       when 'us-east-1'
-        node.default['autofs-nativex']['server'] = "PAE1AL-NAS-03-prv.nativexintern.com"
+        node.default['autofs-nativex']['server'] = "#{node['autofs-nativex']['us-east1']}"
       when 'us-west-1'
-        node.default['autofs-nativex']['server'] = "PAW1AL-NAS-01-prv.nativexintern.com"
+        node.default['autofs-nativex']['server'] = "#{node['autofs-nativex']['us-west1']}"
       when 'us-west-2'
-        node.default['autofs-nativex']['server'] = "PAW2AL-NAS-02-prv.nativexintern.com"
+        node.default['autofs-nativex']['server'] = "#{node['autofs-nativex']['us-west2']}"
      else
       Chef::Log.warn("Undefined AWS region! Cannot automatically set the proper NAS FQDN.")
     end
