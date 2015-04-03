@@ -22,7 +22,7 @@ end
 # Reload autofs service
 service "autofs" do
   supports [ :status => true, :start => true, :stop => true, :restart => true, :reload => true ]
-  action [:enable, :start, :reload]
+  action [:enable, :start]
 end
 
 template "/etc/auto.master" do
