@@ -9,6 +9,8 @@
 
 include_recipe "ohai-nativex::default" if node['cloud']['provider'] == 'ec2'
 
+if node['cloud']['provider'] == 'ec2'
+
 ruby_block "determine_ec2_region_and_set_nas" do
   block do
     case node['aws']['region']
@@ -24,4 +26,22 @@ ruby_block "determine_ec2_region_and_set_nas" do
   end
   action :run
   only_if { node['cloud']['provider'] == 'ec2' }
+end
+
+else
+
+  # TODO: Remove hardcoded values if cookbook is open sourced.
+  ruby_block 'machine_is_on-premise_set_to_cdc_nas' do
+    block do
+      hostname = node['hostname']
+      if hostname.include? 'CHD'
+        node.default['autofs-nativex']['server'] = "#{node['autofs-nativex']['cdc']}"
+      elsif hostname.include? 'SHO'
+        node.default['autofs-nativex']['server'] = "#{node['autofs-nativex']['cdc']}"
+      else
+        Chef::Log.warn('Undefined physical server! Cannot automatically set the proper NAS FQDN.')
+      end
+    action :run
+  end
+
 end
