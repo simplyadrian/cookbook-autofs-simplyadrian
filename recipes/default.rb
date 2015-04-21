@@ -8,7 +8,7 @@
 #
 
 # If we're in EC2, then need to dynamically determine the NAS based on region
-include_recipe 'autofs-nativex::dynamic_nas' if node['cloud']['provider'] == 'ec2'
+include_recipe 'autofs-nativex::dynamic_nas' if ec2?
 
 # Install autofs for mounting home directories.
 case node[:platform]
@@ -17,6 +17,8 @@ when 'debian','ubuntu'
   package 'ldap-utils'
 when 'redhat','centos','fedora','amazon'
   package 'autofs'
+else
+  Chef::Log.warn('Unknown platform! autofs must be installed manually.')
 end
 
 # Reload autofs service
