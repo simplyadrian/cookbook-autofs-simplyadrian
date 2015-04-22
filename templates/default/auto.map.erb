@@ -1,0 +1,3 @@
+<% @node['autofs-nativex']['maps'].each do |map| %>
+<%= map[:key] %> <%= map[:options] %> <%= node['autofs-nativex']['server'] %>:<%= map[:export] %>
+<% end %>
