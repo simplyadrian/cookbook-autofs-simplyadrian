@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: autofs-nativex
+# Cookbook Name:: autofs-simplyadrian
 # Recipe:: default
 #
-# Copyright 2015, NativeX
+# Copyright 2015, simplyadrian
 #
 # All rights reserved - Do Not Redistribute
 #
@@ -13,7 +13,7 @@ if File.directory?('/etc/pbis')
   Chef::Log.error('PBIS is installed, skipping adcli/SSSD domain configuration.')
 else
 
-  include_recipe 'autofs-nativex::dynamic_nas'
+  include_recipe 'autofs-simplyadrian::dynamic_nas'
 
   # Install autofs for mounting home directories.
   case node[:platform]
@@ -40,7 +40,7 @@ else
     notifies :reload, resources(:service => "autofs"), :immediately
   end
 
-  node['autofs-nativex']['maps'].each do |map|
+  node['autofs-simplyadrian']['maps'].each do |map|
     template map[:source] do
       owner "root"
       group "root"

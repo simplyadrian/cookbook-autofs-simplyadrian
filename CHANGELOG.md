@@ -1,11 +1,11 @@
-autofs-nativex CHANGELOG
+autofs-simplyadrian CHANGELOG
 ========================
 
-This file is used to list changes made in each version of the autofs-nativex cookbook.
+This file is used to list changes made in each version of the autofs-simplyadrian cookbook.
 
 0.1.0
 -----
-- [Adrian Herrera] - Initial release of autofs-nativex
+- [Adrian Herrera] - Initial release of autofs-simplyadrian
 
 - - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
